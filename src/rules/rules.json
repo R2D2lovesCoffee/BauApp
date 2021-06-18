@@ -1,0 +1,39 @@
+{
+    "assignmentsPerDay": {
+        "value": 2,
+        "description": "How many assignments there are in a day."
+    },
+    "rules": {
+        "daysBetweenShifts": {
+            "description": "An engineer cannot have half day shifts on consecutive days.",
+            "variables": {
+                "recurrence": {
+                    "value": 1,
+                    "description": "Number of days that have to pass between two shifts that belong to different days for an engineer."
+                }
+            }
+        },
+        "weeksCycle": {
+            "description": "Each engineer should have completed {noAssignments / assignmentsPerDay} days of support in any {noWeeks} period.",
+            "variables": {
+                "noAssignments": {
+                    "value": 2,
+                    "description": "Number of assignments that an engineer should have completed in the given period"
+                },
+                "noWeeks": {
+                    "value": 2,
+                    "description": "Number of weeks in which the engineer should complete the given assignments"
+                }
+            }
+        },
+        "allowMultipleShifts": {
+            "description": "An engineer can work at most a half day shift in a day.",
+            "variables": {
+                "canWorkMultipleTimes": {
+                    "value": false,
+                    "description": "If the same engineer can be picked multiple times to work in both shifts of the day"
+                }
+            }
+        }
+    }
+}
