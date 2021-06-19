@@ -8,13 +8,26 @@ const router = Router();
 router.use(json());
 
 router.post('/engineers', async (req, res) => {
-    await EngineerModel.create({ name: req.body.name });
-    res.status(201).send();
+    if (req.body.name) {
+        try {
+            await EngineerModel.create({ name: req.body.name });
+            res.status(201).send();
+        } catch (err) {
+            res.status(500).send({ message: 'Something went wrong' });
+            console.log(err);
+        }
+    } else {
+        res.status(400).send({ message: 'Bad format' })
+    }
 })
 
-router.get('/engineers', async (req, res) => {
-    const engineers = await EngineerModel.find();
-    res.send(engineers)
+router.get('/engineers', async (_, res) => {
+    try {
+        const engineers = await EngineerModel.find();
+        res.send(engineers)
+    } catch (err) {
+        res.status(500).send({ message: 'Something went wrong' })
+    }
 })
 
 router.get('/wheel', wheelMiddleware, wheelController.getTodayEngineers)
