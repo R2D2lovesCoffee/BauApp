@@ -32,4 +32,6 @@ router.get('/engineers', async (_, res) => {
 
 router.get('/wheel', wheelMiddleware, wheelController.getTodayEngineers)
 
+router.get('/', (_req, res) => res.redirect('/api/engineers'))
+
 export default router;

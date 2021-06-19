@@ -15,6 +15,10 @@ declare global {
 
 connect().then(async () => {
     const app = express();
+
+    app.get('/', (_, res) => {
+        res.send('Check out my api on /api!')
+    })
     app.use('/api', router);
 
     app.listen(process.env.PORT, () => {
