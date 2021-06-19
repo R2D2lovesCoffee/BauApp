@@ -5,6 +5,14 @@ import { config } from 'dotenv';
 
 config();
 
+declare global {
+    namespace Express {
+        interface Request {
+            today: Date
+        }
+    }
+}
+
 connect().then(async () => {
     const app = express();
     app.use('/api', router);

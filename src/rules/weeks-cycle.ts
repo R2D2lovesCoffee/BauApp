@@ -4,7 +4,8 @@ import EngineerModel from '../models/engineer';
 
 export default async function (engineers: PriorityEngineer[], date: Date): Promise<PriorityEngineer[]> {
     const { noAssignments, noWeeks } = rulesJson.rules.weeksCycle.variables;
-    const edgeDate = new Date(date.setDate(date.getDate() - noWeeks.value * 7));
+    let edgeDate = new Date(date);
+    edgeDate = new Date(edgeDate.setDate(edgeDate.getDate() - noWeeks.value * 7));
 
     let weeksCycleAssignments = await EngineerModel.aggregate([
         {
@@ -40,13 +41,11 @@ export default async function (engineers: PriorityEngineer[], date: Date): Promi
         }
     ])
 
-    console.log('weeksCycleAssignments', weeksCycleAssignments);
 
     engineers = engineers.filter((engineer: PriorityEngineer) => {
         const match = weeksCycleAssignments.find((elem: any) => elem._id.toString() === engineer._id.toString())
         engineer.priority = 1000 - match.noAssignments;
         return match.noAssignments < noAssignments.value;
     });
-    console.log('after weeks cycle:', engineers);
     return engineers;
 }

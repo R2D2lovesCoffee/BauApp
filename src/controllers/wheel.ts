@@ -1,12 +1,11 @@
 import { Request, Response } from 'express';
-import { getFormatedDate } from '../helper';
 import rulesManager from '../rules/rules-manager';
 import ScheduleModel from '../models/schedule';
 
 export default {
     getTodayEngineers: async (req: Request, res: Response) => {
         try {
-            const today = getFormatedDate();
+            const { today } = req;
             const manager = await rulesManager(today);
             const check = manager.checkRules();
             if (!check) {

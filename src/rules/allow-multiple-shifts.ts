@@ -10,14 +10,11 @@ export default async function (engineers: PriorityEngineer[]): Promise<PriorityE
         }
         groupedByPriority[engineer.priority].push(engineer);
     })
-    console.log('groupedByPriority before shuffle:', groupedByPriority)
     const priorities = Object.keys(groupedByPriority);
     priorities.forEach((priority: string) => {
         groupedByPriority[priority] = groupedByPriority[priority].sort(() => Math.random() - 0.5);
     })
-    console.log('groupedByPriority after shuffle:', groupedByPriority)
     const prioritiesInDescendingOrder = priorities.sort((a: any, b: any) => b - a);
-    console.log('priorities in order:', prioritiesInDescendingOrder)
     engineers = [];
     prioritiesInDescendingOrder.forEach((priority: string) => {
         engineers.push(...groupedByPriority[priority])

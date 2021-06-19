@@ -4,9 +4,13 @@ import { getFormatedDate } from '../helper';
 
 
 export default async (req: Request, res: Response, next: NextFunction) => {
-    const found = await ScheduleModel.findOne({ date: getFormatedDate() });
+    const today = getFormatedDate();
+    const found = await ScheduleModel.findOne({ date: today });
     if (!found) {
-        return next();
+        console.log('next?');
+        req.today = today;
+        next();
+    } else {
+        res.send(found);
     }
-    res.send(found);
 }
